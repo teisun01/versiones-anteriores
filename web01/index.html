@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Cristales</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  body{
+    font-family: 'Merriweather', serif;
+    font-weight: 700; /* Bold */
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+    min-height:100vh;
+    background:#2F4C3A;
+    margin:0;
+  }
+
+  header {
+    width:100%;
+    height:60px;
+    background:#88B78A;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    box-sizing:border-box;
+  }
+  header .titulo { font-weight:bold;font-size:18px; }
+  header img { height:40px;width:auto; }
+
+  #tituloPrincipal,#tituloCristal{
+    color:#fff;
+    margin:20px 0;
+    text-align:center;
+    font-size:2rem;
+  }
+  #tituloCristal { display:none; }
+
+  .contenedor{
+    position:relative;
+    width:100%;
+    max-width:1000px;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:20px;
+  }
+
+  .grilla {
+    position:relative;
+    width:100%;
+    height:500px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .grilla.oculto { display:none; }
+
+  .cristalCaja {
+    position:absolute;
+    width:12%;
+    max-width:100px;
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: all 0.4s ease;
+    opacity:1;
+    cursor:pointer;
+  }
+  .cristalCaja img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    pointer-events:none;
+    transition: transform 0.4s ease;
+  }
+  .cristalCaja.inhabilitado { pointer-events:none; cursor:default; }
+
+  /* === POSICIONES FIJAS === */
+  .izq-arriba   { top:20%; left:25%; transform:translate(-50%,-50%); }
+  .izq-abajo    { top:70%; left:25%; transform:translate(-50%,-50%); }
+  .centro       { top:45%; left:50%; transform:translate(-50%,-50%); width:20%; max-width:160px; }
+  .der-arriba   { top:20%; left:75%; transform:translate(-50%,-50%); }
+  .der-abajo    { top:70%; left:75%; transform:translate(-50%,-50%); }
+
+  .palpitando {
+    animation: palpitar 1.3s infinite ease-in-out;
+    transform-origin:center;
+  }
+  @keyframes palpitar {
+    0%,100% { transform: scale(1); }
+    50%    { transform: scale(1.18); }
+  }
+
+  .detalleCristal {
+    display:none;
+    width:100%;
+    max-width:900px;
+    align-items:center;
+    justify-content:center;
+    gap:40px;
+  }
+  .detalleCristal.visible { display:flex; }
+
+  .textoCampo {
+    width:300px;
+    padding:20px;
+    font-size:24px;
+    color:#ffff;
+    line-height:1.5;
+  }
+  .cristal-grande {
+    width:220px;
+    height:220px;
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .cristal-grande img { width:100%; height:100%; object-fit:contain; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="titulo">Mortalis</div>
+  <img src="img/mortalislogo.png" alt="Logo">
+</header>
+
+<h1 id="tituloPrincipal">FAMILIA DE CRISTALES</h1>
+<h1 id="tituloCristal"></h1>
+
+<div class="contenedor">
+  <div class="grilla" id="grilla">
+
+    <!-- IZQUIERDA -->
+    <div id="cVioleta" class="cristalCaja izq-arriba inhabilitado">
+      <img src="img/cristales/cristalvioleta.png"
+           data-disabled="img/cristales/cristalvioletalinea.png"
+           data-NombreCristal="Amatista">
+    </div>
+
+    <div id="cRosa" class="cristalCaja izq-abajo">
+      <img src="img/cristales/cristalrosa.png"
+           data-disabled="img/cristales/cristalrosalinea.png"
+           data-NombreCristal="Rodonita"
+           class="palpitando">
+    </div>
+
+    <!-- CENTRO -->
+    <div id="cCeleste" class="cristalCaja centro inhabilitado">
+      <img src="img/cristales/cristalceleste.png"
+           data-disabled="img/cristales/cristalcelestelinea.png"
+           data-NombreCristal="Cristal de Selen">
+    </div>
+
+    <!-- DERECHA -->
+    <div id="cAmarillo" class="cristalCaja der-arriba inhabilitado">
+      <img src="img/cristales/cristalamarillo.png"
+           data-disabled="img/cristales/cristalamarillolinea.png"
+           data-NombreCristal="Citrino">
+    </div>
+
+    <div id="cVerde" class="cristalCaja der-abajo inhabilitado">
+      <img src="img/cristales/cristalverde.png"
+           data-disabled="img/cristales/cristalverdelinea.png"
+           data-NombreCristal="Jade">
+    </div>
+  </div>
+
+  <div class="detalleCristal" id="detalleCristal"></div>
+</div>
+
+<script>
+  // Orden: rosa -> violeta -> verde -> amarillo -> celeste
+  const arrayCristal = ['cRosa','cVioleta','cVerde','cAmarillo','cCeleste'];
+  const activacion = new Set(['cRosa']); // rosa empieza activo
+  let IdentidadCristal = null;
+
+  // Cargar imágenes deshabilitadas
+  document.querySelectorAll(".cristalCaja.inhabilitado img").forEach(img => {
+    if(img.dataset.disabled){
+      img.dataset.enabled = img.src;
+      img.src = img.dataset.disabled;
+    }
+  });
+
+  function activate(id){
+    const cristalCaja = document.getElementById(id);
+    if(!cristalCaja || !cristalCaja.classList.contains('inhabilitado')) return;
+    cristalCaja.classList.remove('inhabilitado');
+    const img = cristalCaja.querySelector('img');
+    if(img && img.dataset.enabled){ img.src = img.dataset.enabled; }
+    if(img) img.classList.add('palpitando');
+    activacion.add(id);
+  }
+
+  const tituloPrincipal = document.getElementById("tituloPrincipal");
+  const tituloCristal   = document.getElementById("tituloCristal");
+
+  arrayCristal.forEach(id => {
+    const cristalCaja = document.getElementById(id);
+    if(!cristalCaja) return;
+    cristalCaja.addEventListener('click', () => {
+      if(cristalCaja.classList.contains('inhabilitado')) return;
+
+      const grilla = document.getElementById("grilla");
+      const detalleCristal = document.getElementById("detalleCristal");
+
+      if(IdentidadCristal === id){
+        IdentidadCristal = null;
+        detalleCristal.classList.remove("visible");
+        detalleCristal.innerHTML = "";
+        grilla.classList.remove("oculto");
+        tituloPrincipal.style.display = "block";
+        tituloCristal.style.display = "none";
+      } else {
+        IdentidadCristal = id;
+        grilla.classList.add("oculto");
+        detalleCristal.classList.add("visible");
+        detalleCristal.innerHTML = "";
+
+        const nombreCristal = cristalCaja.querySelector("img").dataset.NombreCristal || "Cristal";
+        tituloPrincipal.style.display = "none";
+        tituloCristal.textContent = nombreCristal;
+        tituloCristal.style.display = "block";
+
+        const CristalGrande = document.createElement("div");
+        CristalGrande.className = "cristal-grande";
+        const img = cristalCaja.querySelector("img");
+        CristalGrande.innerHTML = `<img src="${img.src}" alt="">`;
+
+        CristalGrande.addEventListener("click", () => {
+          IdentidadCristal = null;
+          detalleCristal.classList.remove("visible");
+          detalleCristal.innerHTML = "";
+          grilla.classList.remove("oculto");
+          tituloPrincipal.style.display = "block";
+          tituloCristal.style.display = "none";
+        });
+
+        const CristalCampoTexto = document.createElement("div");
+        CristalCampoTexto.className = "textoCampo";
+        switch(id){
+          case "cRosa":    CristalCampoTexto.innerHTML="<small>Aquellas personas que lleven este cristal se destacan por ser positivas y calmadas. Asociadas con la creatividad, provienen de una familia.</small>"; break;
+          case "cVioleta": CristalCampoTexto.innerHTML="<small>Esta piedra representa a las personas serenas y con una gran intuicion.</small>"; break;
+          case "cVerde":   CristalCampoTexto.innerHTML="<small>Una piedra sagrada y armonica, proveniente de una familia con una gran conexion con la naturaleza</small>"; break;
+          case "cAmarillo":CristalCampoTexto.innerHTML="<small>Para las personas que siempre buscan llegar al exito, esta piedra la mejor que podran llevar. Proveniente de una familia optimista y alegre</small>"; break;
+          case "cCeleste": CristalCampoTexto.innerHTML="<small>La piedra principal, aquella que fue de Selen, brinda salud y prosperidad a su pueblo </small>"; break;
+        }
+        detalleCristal.appendChild(CristalGrande);
+        detalleCristal.appendChild(CristalCampoTexto);
+
+        // Activar el siguiente en la cadena
+        const indiceCristal = arrayCristal.indexOf(id);
+        const siguienteID = arrayCristal[indiceCristal + 1];
+        if(siguienteID && !activacion.has(siguienteID)){ activate(siguienteID); }
+      }
+    });
+  });
+</script>
+</body>
+</html>
