@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>cristales</title>
+<style>
+  body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    background:#eee;
+    margin:0;
+  }
+
+  .contenedor{
+    position:relative;
+    width:400px;
+    height:400px;
+  }
+
+  .cristalCaja {
+    position:absolute;
+    width:80px;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .cristalCaja.arriba   { top:-100px;  left:50%; transform:translateX(-50%); }
+  .cristalCaja.abajo    { bottom:-100px; left:50%; transform:translateX(-50%); }
+  .cristalCaja.izquierda{ left:-40px; top:50%;  transform:translateY(-50%); }
+  .cristalCaja.derecha  { right:-40px; top:50%; transform:translateY(-50%); }
+  .cristalCaja.centro   { top:50%; left:50%; transform:translate(-50%,-50%); width:220px; height:220px; }
+
+  .cristalCaja img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    pointer-events:auto;
+  }
+
+  .cristalCaja.inhabilitado { pointer-events:none; cursor:default; }
+  .cristalCaja.inhabilitado img { filter:grayscale(100%); opacity:0.45; }
+
+  .palpitando {
+    animation: palpitar 1.3s infinite ease-in-out;
+    transform-origin:center;
+  }
+  @keyframes palpitar {
+    0%,100% { transform: scale(1); }
+    50%    { transform: scale(1.18); }
+  }
+
+.textoCampo {
+  position: absolute;
+  background: #fff;
+  padding: 16px;
+  color: #000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+  font-size: 14px;
+  border-radius: 4px;
+  z-index: 0; 
+}
+.textoCampo strong { display:block; margin-bottom:6px; }
+.textoCampo small { color:#555; font-size:12px; }
+
+.textoCampo.left {
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  width: 200px;
+  clip-path: polygon(
+    15% 0,
+    100% 0,
+    100% 100%,
+    15% 100%,
+    0 50%
+  );
+}
+.textoCampo.left::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -20px;     
+  transform: translateY(-50%);
+  width: 20px;
+  height: 100%;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.textoCampo.right {
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  width: 200px;
+  clip-path: polygon(
+    0 0,
+    85% 0,
+    100% 50%,
+    85% 100%,
+    0 100%
+  );
+}
+.textoCampo.right::before {
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:-20px;
+  width:20px;
+  background:inherit;
+  clip-path:polygon(0 0, 100% 50%, 0 100%);
+}
+
+.textoCampo.top {
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  width: 200px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 85%,
+    50% 100%,
+    0 85%
+  );
+}
+.textoCampo.top::before {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-20px;
+  height:20px;
+  background:inherit;
+  clip-path:polygon(0 0, 50% 100%, 100% 0);
+}
+
+.textoCampo.bottom {
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+  width: 200px;
+  clip-path: polygon(
+    0 15%,
+    50% 0,
+    100% 15%,
+    100% 100%,
+    0 100%
+  );
+}
+.textoCampo.bottom::before {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:-20px;
+  height:20px;
+  background:inherit;
+  clip-path:polygon(0 100%, 50% 0, 100% 100%);
+}
+
+.textoCampo.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  text-align: center;
+}
+
+/* se activa y se muestra encima */
+.textoCampo.visible {
+  opacity: 1;
+  z-index: 10;
+}
+
+/* evita superposición */
+.textoCampo.left.visible,
+.textoCampo.right.visible {
+  z-index: -1;
+}
+</style>
+</head>
+<body>
+  <div class="contenedor">
+
+    <div id="cRosa" class="cristalCaja izquierda">
+      <img src="img/simazul.png" alt="Izquierda" class="palpitando">
+    </div>
+
+    <div id="cVioleta" class="cristalCaja arriba inhabilitado">
+      <img src="img/simrojo.png" alt="Arriba">
+    </div>
+
+    <div id="cAmarillo" class="cristalCaja derecha inhabilitado">
+      <img src="img/simamarillo.png" alt="Derecha">
+    </div>
+
+    <div id="cVerde" class="cristalCaja centro inhabilitado">
+      <img src="img/simverde.png" alt="Centro">
+    </div>
+
+    <div id="cCeleste" class="cristalCaja abajo inhabilitado">
+      <img src="img/simvioleta.png" alt="Abajo">
+    </div>
+
+    <!-- cuadros de texto -->
+    <div id="box-cRosa"  class="textoCampo left">
+      <strong>Izquierda</strong>
+      <small>Contenido del diamante izquierdo.</small>
+    </div>
+
+    <div id="box-cCeleste" class="textoCampo bottom">
+      <strong>Abajo</strong>
+      <small>Contenido que aparece desde abajo.</small>
+    </div>
+
+    <div id="box-cAmarillo"  class="textoCampo right">
+      <strong>Derecha</strong>
+      <small>Contenido del diamante derecho.</small>
+    </div>
+
+    <div id="box-cVioleta" class="textoCampo top">
+      <strong>Arriba</strong>
+      <small>Contenido que aparece desde arriba.</small>
+    </div>
+
+    <div id="box-cVerde" class="textoCampo center">
+      <strong>Centro</strong>
+      <small>Contenido del PNG central.</small>
+    </div>
+
+  </div>
+
+<script>
+  const arrayCristal = ['cRosa','cCeleste','cAmarillo','cVioleta','cVerde'];
+  const activacion = new Set(['cRosa']);
+
+  function activate(id){
+    const cristalCaja = document.getElementById(id);
+    if(!cristalCaja || !cristalCaja.classList.contains('inhabilitado')) return;
+    cristalCaja.classList.remove('inhabilitado');
+    const img = cristalCaja.querySelector('img');
+    if(img) img.classList.add('palpitando');
+    activacion.add(id);
+  }
+
+  arrayCristal.forEach(id => {
+    const cristalCaja = document.getElementById(id);
+    if(!cristalCaja) return;
+
+    cristalCaja.addEventListener('mouseenter', () => {
+      if(cristalCaja.classList.contains('inhabilitado')) return;
+
+      const box = document.getElementById('box-' + id);
+      if(box) box.classList.add('visible');
+
+      const img = cristalCaja.querySelector('img');
+      if(img) img.classList.remove('palpitando');
+
+      activacion.add(id);
+
+      const idx = arrayCristal.indexOf(id);
+      const nextId = arrayCristal[idx + 1];
+      if(nextId && !activacion.has(nextId)){
+        activate(nextId);
+      }
+    });
+
+    cristalCaja.addEventListener('mouseleave', () => {
+      const box = document.getElementById('box-' + id);
+      if(box) box.classList.remove('visible');
+    });
+  });
+</script>
+</body>
+</html>
