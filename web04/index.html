@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cristal Scroll</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+p {
+    color: #fff
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(17,17,17,0.7);
+  z-index: 10;
+}
+
+header img.logo {
+  width: 60px;
+}
+
+header h1 {
+  color: violet;
+  font-size: 1.5rem;
+}
+
+header .redes a {
+  margin-left: 15px;
+  color: violet;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+header .redes a:hover {
+  color: #fff;
+}
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      min-height: 200vh; /* suficiente para scrollear */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Sección inicial */
+    .hero {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+.cristal {
+  width: 250px;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards, pulse 4s ease-in-out infinite, float 6s ease-in-out infinite 2s;
+  filter: drop-shadow(0 0 20px #1bc9c3);
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-20px); }  /* sube más */
+  50% { transform: translateY(0); }     /* vuelve al centro */
+  75% { transform: translateY(20px); }  /* baja un poco */
+}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+
+
+    /* Flecha */
+    .flecha {
+      position: absolute;
+      bottom: 40px;
+      width: 24px;
+      height: 24px;
+      border-left: 2px solid #A1D4D2;
+      border-bottom: 2px solid #A1D4D2;
+      transform: rotate(-45deg);
+      animation: bounce 1.5s infinite;
+      transition: opacity 0.8s ease;
+    }
+
+    .flecha.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: rotate(-45deg) translateY(0); }
+      50% { transform: rotate(-45deg) translateY(8px); }
+    }
+
+    /* Sección árbol */
+    .content {
+      height: 100vh;
+      background: (#222);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1.2s ease;
+    }
+
+    .content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .content img {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 1.5rem;
+      color: #ccc;
+      max-width: 600px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+    
+  <section class="hero">
+    <img src="img/cristales/cristalceleste.png" alt="Cristal" class="cristal">
+    <div class="flecha"></div>
+  </section>
+
+  <section class="content" id="arbolSection">
+    <img src="img/cristales/arbol.png" alt="Árbol">
+    <p>Muy pronto. <br> Donde los recuerdos se enraízan.</p>
+  </section>
+
+  <script>
+    // Detectar scroll para ocultar flecha
+    const flecha = document.querySelector('.flecha');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        flecha.classList.add('hide');
+      } else {
+        flecha.classList.remove('hide');
+      }
+    });
+
+    // Animar aparición del árbol con Intersection Observer
+    const arbolSection = document.getElementById('arbolSection');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          arbolSection.classList.add('show');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(arbolSection);
+  </script>
+</body>
+</html>
