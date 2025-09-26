@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cristal Scroll</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* === WRAPPER que mueve JS === */
+    .cristal-wrap {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* posición base: centro */
+      transition: transform 1.2s ease, opacity 1.6s ease;
+      z-index: 5;
+      pointer-events: none; /* para que no interfiera con clicks */
+      opacity: 1;
+    }
+
+    /* === inner para el float (translateY) === */
+    .cristal-inner {
+      display: inline-block;
+      animation: float 6s ease-in-out infinite 1.2s;
+    }
+
+    /* === wrapper de escala (palpitar) === */
+    .cristal-scale {
+      display: inline-block;
+      transform-origin: center center;
+      animation: pulse 4s ease-in-out infinite 0.8s;
+    }
+
+    /* === la imagen en sí (sombra y fade-in de opacidad) === */
+    .cristal-img {
+      width: 250px;
+      display: block;
+      filter: drop-shadow(0 0 20px #1bc9c3);
+      opacity: 0;
+      animation: fadeInOpacity 1.6s ease forwards;
+    }
+
+    /* ===== Animaciones ===== */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      25% { transform: translateY(-15px); }
+      50% { transform: translateY(0); }
+      75% { transform: translateY(15px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeInOpacity {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* === Textos === */
+    .texto {
+      font-size: 2rem;
+      color: #ccc;
+      max-width: 600px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .texto.show { opacity: 1; transform: translateY(0); }
+
+    .texto-lateral {
+      font-size: 2rem;
+      color: #ccc;
+      max-width: 500px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      margin-left: 20px;
+    }
+    .texto-lateral.show { opacity: 1; transform: translateY(0); }
+
+    /* === Árbol === */
+    #arbolSection img {
+      width: 200px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    #arbolSection p {
+      font-size: 1.5rem;
+      color: #ccc;
+      max-width: 600px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.5s ease, transform 1.5s ease;
+    }
+    #arbolSection.show img,
+    #arbolSection.show p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sección 1: Inicio -->
+  <section class="hero">
+    <!-- Aquí está el wrapper que mueve JS. dentro están las capas con la animación -->
+    <div class="cristal-wrap" id="cristalWrap">
+      <div class="cristal-inner">
+        <div class="cristal-scale">
+          <img src="img/cristales/cristalceleste.png" alt="Cristal" class="cristal-img" id="cristalImg">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 2: Texto en el centro -->
+  <section id="textoCentroSection">
+    <div class="texto" id="textoCentro">
+      El cristal revela su esencia...
+    </div>
+  </section>
+
+  <!-- Sección 3: Cristal izquierda + texto derecha -->
+  <section id="lateralSection">
+    <div class="texto-lateral" id="textoLateral">
+      El cristal se aparta,<br> dejando espacio a nuevas visiones.
+    </div>
+  </section>
+
+  <!-- Sección 4: Cristal vuelve al centro (se mantiene visible) -->
+  <section id="cristalFinalSection">
+    <div class="texto" id="textoFinal">
+      El cristal se despide en silencio...
+    </div>
+  </section>
+
+  <!-- Sección 5: Árbol -->
+  <section id="arbolSection">
+    <div>
+      <img src="img/cristales/arbol.png" alt="Árbol">
+      <p>Muy pronto. <br> Donde los recuerdos se enraízan.</p>
+    </div>
+  </section>
+
+  <script>
+    // Nota: ahora movemos el WRAPPER (cristalWrap), no la imagen directa.
+    const cristalWrap = document.getElementById('cristalWrap');
+    const textoCentro = document.getElementById('textoCentro');
+    const textoLateral = document.getElementById('textoLateral');
+    const textoFinal = document.getElementById('textoFinal');
+    const arbolSection = document.getElementById('arbolSection');
+
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      const vh = window.innerHeight;
+
+      // --- Sección 1: Cristal centrado ---
+      if (scroll < vh * 0.5) {
+        cristalWrap.style.transform = "translate(-50%, -50%)";
+        cristalWrap.style.opacity = "1";
+        textoCentro.classList.remove("show");
+        textoLateral.classList.remove("show");
+        textoFinal.classList.remove("show");
+        arbolSection.classList.remove("show");
+      }
+
+      // --- Sección 2: Cristal centro + texto aparece ---
+      else if (scroll >= vh * 0.5 && scroll < vh * 1.5) {
+        cristalWrap.style.transform = "translate(-50%, -50%)";
+        cristalWrap.style.opacity = "1";
+        textoCentro.classList.add("show");
+        textoLateral.classList.remove("show");
+        textoFinal.classList.remove("show");
+        arbolSection.classList.remove("show");
+      }
+
+      // --- Sección 3: Cristal a la izquierda + texto derecha ---
+      else if (scroll >= vh * 1.5 && scroll < vh * 2.5) {
+        cristalWrap.style.transform = "translate(-150%, -50%)"; // mover wrapper a la izquierda
+        cristalWrap.style.opacity = "1";
+        textoCentro.classList.remove("show");
+        textoLateral.classList.add("show");
+        textoFinal.classList.remove("show");
+        arbolSection.classList.remove("show");
+      }
+
+      // --- Sección 4: Cristal vuelve al centro (todavía visible) ---
+      else if (scroll >= vh * 2.5 && scroll < vh * 3.5) {
+        cristalWrap.style.transform = "translate(-50%, -50%)";
+        cristalWrap.style.opacity = "1"; // se mantiene visible en el centro
+        textoCentro.classList.remove("show");
+        textoLateral.classList.remove("show");
+        textoFinal.classList.add("show");
+        arbolSection.classList.remove("show");
+      }
+
+      // --- Sección 5: Cristal desaparece + árbol aparece ---
+      else if (scroll >= vh * 3.5) {
+        cristalWrap.style.transform = "translate(-50%, -50%)";
+        cristalWrap.style.opacity = "0"; // fade out del wrapper (desaparece TODO)
+        textoCentro.classList.remove("show");
+        textoLateral.classList.remove("show");
+        textoFinal.classList.remove("show");
+        arbolSection.classList.add("show");
+      }
+    });
+  </script>
+
+</body>
+</html>
