@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Parallax Storytelling — Fijo + Mouse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@900&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0f;
+      --muted:#d6d6d8;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      font-family: 'Merriweather', serif;
+      background-color: var(--bg);
+      background-image: url("img/pasto-recortado.png"), url("img/pasto-recortado.png");
+      background-repeat: no-repeat, repeat-y;
+      background-position: center top, center top;
+      background-size: cover, cover;
+      color: var(--muted);
+    }
+
+    img, .parallax-layer, .parallax-descendiente, .layer-title {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container { position:relative; width:100%; margin:0 auto; }
+
+    .stage {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    /* Morthalis (título gráfico) */
+    .layer-title{ 
+      position:absolute;
+      z-index:102; 
+      width:600px; 
+      top:40%;    /* más arriba */
+      left:10%;   /* más a la izquierda */
+      transform:none; 
+    }
+
+    .parallax-layer,
+    .parallax-descendiente,
+    #layer-moon {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .parallax-layer {
+      width:100%;
+      height:auto;
+      max-width:none;
+    }
+
+    #layer-moon {
+      width: 100%;
+      height: 100vh;
+      background-size: cover;
+      background-image: url("img/arbolesfondo-solo.png");
+      background-repeat: repeat-x;
+      background-position: top center;
+      z-index: 0;
+    }
+
+    #layer-forest{ z-index:100; }
+
+    #layer-brilloraices{
+      z-index:101;
+      opacity:0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    #layer-brilloraices.visible{ opacity:1; }
+
+    section.story {
+      min-height: 100vh;
+      height: auto;
+      position: relative;
+      z-index: 2;
+      padding: 80px;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    section.story h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    section.story p {
+      font-size: 24px;
+      line-height: 1.6;
+      color: #fff;
+      max-width: 550px;
+    }
+
+    .parallax-descendiente {
+      width: 150px;
+      z-index: 103;
+    }
+
+    #layer-forest, #layer-brilloraices, #layer-descendiente { 
+      width:100%;
+      max-width:1920px; 
+      height:auto; 
+    }
+
+/* --- Ajustes específicos para móviles --- */
+@media (max-width: 768px) {
+  /* Fondo ocupa todo el ancho */
+  #layer-moon {
+    position: absolute;
+    top: 0;
+    left: 80%;             /* centro horizontal del viewport */
+    transform: translateX(-50%); /* ajusta el centro */
+    width: 180vw;           /* ancho total del viewport */
+    height: 140vh;          /* más altura */
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center top; /* mantiene la parte superior visible */
+  }
+
+  /* Árbol amarillo un poco más abajo y más grande */
+  #layer-clouds {
+        left: 75%;             /* centro horizontal del viewport */
+    transform: translateX(-50%) translateY(280px) !important;
+    width: 150%;      /* agrandado */
+    max-width: none;
+    height: auto;
+  }
+
+  /* Selen centrado en X y más grande */
+  #layer-mountains {
+    left: 85% !important;            /* centrado horizontal */
+    transform: translateX(-50%) translateY(180px) !important;
+    width: 200%;                      /* agrandado */
+    max-width: none;
+    height: auto;
+  }
+
+  /* Título gráfico */
+  .layer-title {
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-200px) !important;; /* centrado horizontal */
+    width: 80%;
+    max-width: 350px;
+  }
+
+  /* Texto más compacto */
+  section.story {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  section.story h2 {
+    font-size: 24px;
+  }
+
+  section.story p {
+    font-size: 18px;
+    max-width: 100%;
+  }
+
+
+    /* Árbol principal */
+  #layer-forest {
+    left: 50%;                 /* centrar horizontalmente */
+    transform: translateX(-50%) translateY(1000px); /* bajarlo */
+    width: 180%;               /* agrandarlo */
+    max-width: none;
+    height: auto;
+  }
+
+    /* Overlay brilloraices */
+  #layer-brilloraices {
+    left: 50%;
+    transform: translateX(-50%) translateY(1000px); /* mismo desplazamiento que el árbol */
+    width: 180%;               /* igual tamaño que el árbol */
+    max-width: none;
+    height: auto;
+  }
+
+  /* Personaje descendiente también se ajusta si quieres que siga al árbol */
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(1000px); /* un poco más abajo */
+    width: 180%;    
+   max-width: none;
+    height: auto;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="stage" id="stage">
+      <div id="layer-moon"></div>
+      <img class="parallax-layer" id="layer-clouds" src="img/arbol-amarillo.png" alt="nubes" />
+      <img class="parallax-layer" id="layer-mountains" src="img/selen.png" alt="montañas" />
+      <img class="layer-title" id="layer-foreground" src="img/morthalis.png" alt="Título gráfico" />
+    </div>
+
+    <!-- Árbol y overlay brilloraices -->
+    <img class="parallax-layer" id="layer-forest" src="img/arbol.png" alt="bosque" />
+    <img class="parallax-layer" id="layer-brilloraices" src="img/brilloraices.png" alt="brilloraices" />
+
+    <!-- Personaje descendiente -->
+    <img class="parallax-descendiente" id="layer-descendiente" src="img/descendiente.png" alt="descendiente" />
+
+    <section id="chapter1" class="story">
+      <h2 class="subtitulo">Un nuevo eco en el silencio</h2>
+      <p class="parrafo">
+       La ausencia tiene un nuevo nombre, 
+       y no es el final. Se dice que al partir, 
+       el alma no se desvanece, sino que se alza, enraizada. 
+       El recuerdo se vuelve tangible, custodiado en un cristal que pulsa con la memoria colectiva. 
+       ¿Es la muerte una metamorfosis? Prepárate para el evento que redefinirá el legado y la conexión. 
+       El ciclo está por revelarse.
+      </p>
+    </section>
+  </div>
+
+<script>
+  const layers = [
+    {el: document.getElementById('layer-clouds'), speed: 0.33},
+    {el: document.getElementById('layer-mountains'), speed: 0.45}
+  ];
+
+  const moonLayer = document.getElementById('layer-moon');
+  const forest = document.getElementById('layer-forest');
+  const brilloraices = document.getElementById('layer-brilloraices');
+  const descendiente = document.getElementById('layer-descendiente');
+  const chapter1 = document.getElementById('chapter1');
+
+  let latestKnownScrollY = 0, ticking = false;
+
+  // proporciones para colocar descendiente en el árbol
+  const ratioX = 0;  
+  const ratioY = 0;  
+
+  function onScroll(){
+    latestKnownScrollY = window.scrollY || window.pageYOffset;
+    if(!ticking){ requestAnimationFrame(update); }
+    ticking = true;
+  }
+
+  function update(){
+    const y = latestKnownScrollY;
+
+    // fondo repetido
+    moonLayer.dataset.scrollY = y * 0.22;
+    moonLayer.style.backgroundPositionY = `${moonLayer.dataset.scrollY}px`;
+
+    // capas normales
+    layers.forEach(layer=>{
+      const factor = layer.speed;
+      const translate = y * factor;
+      layer.el.dataset.scrollY = translate;
+      layer.el.style.transform = `translateX(-50%) translateY(${translate}px)`;
+    });
+
+    if(forest && chapter1){
+      const limite = chapter1.offsetTop - 800;
+      const offset = Math.min(y, limite);
+      forest.style.transform = `translateX(-50%) translateY(${offset}px)`;
+
+      if(brilloraices){
+        brilloraices.style.transform = `translateX(-50%) translateY(${offset}px)`;
+        if(y > limite * 0.7){
+          brilloraices.classList.add("visible");
+        } else {
+          brilloraices.classList.remove("visible");
+        }
+      }
+
+      if(descendiente){
+        const rect = forest.getBoundingClientRect();
+        const ancho = rect.width;
+        const alto = rect.height;
+        const posX = (ancho * ratioX);
+        const posY = (alto * ratioY);
+
+        descendiente.style.transform =
+          `translateX(calc(-50% + ${posX}px)) translateY(${offset + posY}px)`;
+      }
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', update);
+
+  update();
+
+  // --- Parallax con mouse ---
+  const cloudsLayer = document.getElementById("layer-clouds");
+  const mountainsLayer = document.getElementById("layer-mountains");
+
+  const moveFactorX = 0.02;
+  const moveFactorY = 0.04;
+
+  window.addEventListener("mousemove", e => {
+    const x = (e.clientX / window.innerWidth) - 0.5;
+    const y = (e.clientY / window.innerHeight) - 0.5;
+
+    // Moon
+    const moonScrollY = parseFloat(moonLayer.dataset.scrollY || 0);
+    const moonTranslateX = x * moveFactorX * 200;
+    const moonTranslateY = y * moveFactorY * 200;
+    moonLayer.style.backgroundPosition =
+      `${50 + moonTranslateX}% ${moonScrollY + moonTranslateY}px`;
+
+    // Clouds
+    const cloudsScrollY = parseFloat(cloudsLayer.dataset.scrollY || 0);
+    const cloudsTranslateY = y * moveFactorY * 80;
+    const cloudsTranslateX = Math.min(0, x * moveFactorX * 200);
+    cloudsLayer.style.transform =
+      `translateX(calc(-50% + ${cloudsTranslateX}px)) translateY(${cloudsScrollY + cloudsTranslateY}px)`;
+
+    // Mountains
+    const mountainsScrollY = parseFloat(mountainsLayer.dataset.scrollY || 0);
+    const mTranslateX = x * moveFactorX * -500;
+    const mTranslateY = y * moveFactorY * 500;
+    mountainsLayer.style.transform =
+      `translateX(calc(-50% + ${mTranslateX}px)) translateY(${mountainsScrollY + mTranslateY}px)`;
+  });
+</script>
+</body>
+</html>
