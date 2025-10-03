@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>pagina principal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <!-- Font Awesome para el ícono -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Merriweather', serif;
+      font-weight: 700; /* Bold */
+      overflow-x: hidden;
+      color: #fff;
+      background: linear-gradient(120deg, #0059ac, #ff99cc, #2e003e, #001a33);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      transition: color 1.8s ease;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 50% 50%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* === Wrapper Cristal === */
+    .cristal-wrap {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 1.2s ease, opacity 1.6s ease;
+      z-index: 5;
+      pointer-events: none;
+      opacity: 1;
+    }
+
+    .cristal-inner { animation: float 6s ease-in-out infinite 1.2s; }
+    .cristal-scale { animation: pulse 4s ease-in-out infinite 0.8s; }
+
+    .cristal-img {
+      width: 250px;
+      filter: drop-shadow(0 0 20px #1bc9c3);
+      opacity: 0;
+      animation: fadeInOpacity 1.6s ease forwards;
+    }
+
+    /* Animaciones cristal */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      25% { transform: translateY(-15px); }
+      75% { transform: translateY(15px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes fadeInOpacity {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Texto central */
+    #textoCentro {
+      font-size: 2rem;
+      max-width: 600px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+      color: #fff;
+      position: relative;
+      z-index: 10;
+    }
+
+    #textoCentro.show {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Textos */
+    .texto {
+      font-size: 2rem;
+      max-width: 600px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      color: #fff;
+    }
+
+    .texto.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .texto.hide {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+
+    .texto-lateral {
+      font-size: 2rem;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateX(-100px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      color: #fff;
+      margin-left: 20px;
+    }
+
+    .texto-lateral.show {
+      opacity: 1;
+      transform: translateX(0);
+      margin-left: 380px;
+    }
+
+    .texto-lateral.hide {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+
+    /* Árbol */
+    #arbolSection img {
+      width: 380px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    #arbolSection p {
+      font-size: 1.5rem;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+      color: #fff;
+    }
+
+    #arbolSection.show img,
+    #arbolSection.show p {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === Botón Instagram === */
+    .instagram-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #E1306C;
+      color: white;
+      font-size: 1.8rem;
+      padding: 12px;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      z-index: 1000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .instagram-btn:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 25px rgba(255,255,255,0.8);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sección 1 -->
+  <section class="hero">
+    <div class="cristal-wrap" id="cristalWrap">
+      <div class="cristal-inner">
+        <div class="cristal-scale">
+          <img src="img/cristales/cristalceleste.png" alt="Cristal" class="cristal-img" id="cristalImg">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 2 -->
+  <section id="textoCentroSection">
+    <div class="texto" id="textoCentro">
+      El cristal revela su esencia...
+    </div>
+  </section>
+
+  <!-- Sección 3 -->
+  <section id="lateralSection">
+    <div class="texto-lateral" id="textoLateral">
+      El cristal se aparta,<br> dejando espacio a nuevas visiones.
+    </div>
+  </section>
+
+  <!-- Sección 4 -->
+  <section id="cristalFinalSection">
+    <div class="texto" id="textoFinal">
+      El cristal se despide en silencio...
+    </div>
+  </section>
+
+  <!-- Sección 5 -->
+  <section id="arbolSection">
+    <div>
+      <img src="img/cristales/arbol.png" alt="Árbol">
+      <p>Muy pronto. <br> Donde los recuerdos se enraízan.</p>
+    </div>
+  </section>
+
+  <!-- Botón Instagram -->
+  <a href="https://www.instagram.com/cecropia.tdm3/" target="_blank" class="instagram-btn">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+<script>
+  const cristalWrap = document.getElementById('cristalWrap');
+  const textoCentro = document.getElementById('textoCentro');
+  const textoCentroSection = document.getElementById('textoCentroSection');
+  const textoLateral = document.getElementById('textoLateral');
+  const lateralSection = document.getElementById('lateralSection');
+  const textoFinal = document.getElementById('textoFinal');
+  const cristalFinalSection = document.getElementById('cristalFinalSection');
+  const arbolSection = document.getElementById('arbolSection');
+
+  function checkVisibility(section, threshold = 0.2) {
+    const rect = section.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const visibleHeight = Math.min(windowHeight, rect.bottom) - Math.max(0, rect.top);
+    const sectionHeight = rect.height;
+    const visibleRatio = visibleHeight / sectionHeight;
+    return visibleRatio >= threshold;
+  }
+
+  function toggleText(el, condition) {
+    if (condition) {
+      el.classList.add("show");
+      el.classList.remove("hide");
+    } else {
+      el.classList.add("hide");
+      el.classList.remove("show");
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    toggleText(textoCentro, checkVisibility(textoCentroSection, 0.2));
+    toggleText(textoLateral, checkVisibility(lateralSection, 0.2));
+    toggleText(textoFinal, checkVisibility(cristalFinalSection, 0.2));
+
+    if (checkVisibility(arbolSection, 0.2)) {
+      arbolSection.classList.add("show");
+    } else {
+      arbolSection.classList.remove("show");
+    }
+
+    const scroll = window.scrollY;
+    const vh = window.innerHeight;
+
+    if (scroll < vh * 0.5) {
+      cristalWrap.style.transform = "translate(-50%, -50%)";
+      cristalWrap.style.opacity = "1";
+    } else if (scroll >= vh * 1.5 && scroll < vh * 2.5) {
+      cristalWrap.style.transform = "translate(-150%, -50%)";
+      cristalWrap.style.opacity = "1";
+    } else if (scroll >= vh * 3.5) {
+      cristalWrap.style.opacity = "0";
+    } else {
+      cristalWrap.style.transform = "translate(-50%, -50%)";
+      cristalWrap.style.opacity = "1";
+    }
+  });
+</script>
+
+</body>
+</html>
