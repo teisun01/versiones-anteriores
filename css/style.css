@@ -1,0 +1,395 @@
+:root { 
+  --bg: #0b0b0f; 
+  --muted: #ffff; 
+}
+
+/* === ESTRUCTURA GENERAL === */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: 'Merriweather', serif;
+  background-color: var(--bg);
+  background-image: url("../img/pasto-recortado.png"), url("../img/pasto-recortado.png");
+  background-repeat: no-repeat, repeat-y;
+  background-position: center top, center top;
+  background-size: cover, cover;
+  color: var(--muted);
+  overflow-x: hidden;
+    overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+img, .parallax-fotos, .parallax-descendiente, .titulo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.contenedor {
+  position: relative;
+  width: 100%;          /* 🔹 Se adapta al ancho de la ventana */
+  max-width: 100%;      /* 🔹 Nunca excede el viewport */
+  min-height: 100vh;
+  margin: 0 auto;
+  overflow: visible;    /* 🔹 Deja expandir según contenido */
+}
+
+.contenedor-inner {
+  position: relative;
+  width: 100%;
+  height: auto;
+  transform-origin: top center;
+}
+
+
+/* === ESCENARIO PARALLAX === */
+.escenario {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.titulo {
+  z-index: 102;
+  width: clamp(200px, 30vw, 600px);
+  top: 40%;
+  left: 10%;
+  transform: none;
+}
+
+.parallax-fotos, 
+.parallax-descendiente, 
+#arbolesfondo-solo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.parallax-fotos { 
+  width: 100%; 
+  height: auto; 
+  max-width: none; 
+}
+
+#arbolesfondo-solo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/arbolesfondo-solo.png");
+  background-size: cover;
+  background-repeat: repeat-x;
+  background-position: center top;
+  z-index: 0;
+}
+
+#hojasarbol { z-index: 98; }
+#layer-brilloramas { z-index: 99; }
+#ramas { z-index: 100; }
+#layer-brilloraices { z-index: 101; }
+#layer-frutos { z-index: 102; }
+#layer-descendiente { z-index: 103; }
+#layer-frutos-ind { z-index: 104; }
+
+/* === SECCIÓN HISTORIA === */
+section.historia {
+  min-height: 100vh;
+  padding: clamp(20px, 4vw, 80px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+section.historia h2 {
+  font-size: clamp(28px, 2vw + 1rem, 64px);
+  margin-bottom: 15px;
+  color: #fff;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+section.historia p {
+  font-size: clamp(16px, 1.2vw + 0.5rem, 28px);
+  line-height: 1.3;
+  color: #fff;
+  max-width: 700px;
+  white-space: pre-line;
+  text-align: left;
+  margin-left: 5%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+
+/* === CONTADOR SOBRE EL ÁRBOL === */
+.contador-wrapper {
+  position: absolute;
+  left: 80%;           /* ajustá la % para que quede sobre la rama deseada */
+  top: 150px;          /* valor base que ya tenés */
+  transform: translateX(-50%); /* centra el punto X sobre la referencia left */
+  pointer-events: none;
+  z-index: 310;
+}
+
+
+.contador-fondo {
+  position: relative;
+  background: url("../img/fondo-contador.png") center center / cover no-repeat;
+  border-radius: 15px;
+  padding: 12px 20px 18px 20px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  width: fit-content;
+  min-width: 150px;
+  z-index: 310;
+}
+
+.contador-fondo h2 {
+  margin: 3px 0;
+  font-size: clamp(14px, 1vw + 0.5rem, 22px);
+  font-weight: 600;
+  color: #003253;
+  position: relative;
+  z-index: 312;
+}
+
+.contador-overlay {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.digito {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 50px;
+  background: url("../img/cuadrito-contador.png") center/contain no-repeat;
+  color: #fff;
+  font-weight: bold;
+  font-size: clamp(18px, 1.5vw + 0.5rem, 32px);
+  text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+
+.separador {
+  display: inline-block;
+  padding: 0 4px;
+  font-size: clamp(18px, 1.5vw + 0.5rem, 32px);
+  font-weight: bold;
+  color: #fff;
+  vertical-align: middle;
+  z-index: 312;
+}
+
+.bloque-tiempo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 6px;
+}
+
+.fila-numeros {
+  display: flex;
+  gap: 2px;
+}
+
+.etiqueta-tiempo {
+  font-size: clamp(10px, 0.8vw + 0.3rem, 16px);
+  font-weight: 500;
+  color: #003253;
+  text-transform: uppercase;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.bloque-tiempo.oculto {
+  display: none;
+}
+
+/* 🔹 Mueve todo el árbol y sus capas un poco a la izquierda */
+#hojasarbol,
+#layer-brilloramas,
+#ramas,
+#layer-brilloraices,
+#layer-frutos,
+#layer-descendiente {
+  left: 45%;
+}
+
+/* === FRUTOS === */
+#link-frutos-ind {
+  display: inline-block;
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 105;
+}
+
+#layer-frutos-inicial,
+#layer-frutos-final {
+  display: block;
+  pointer-events: auto;
+  width: 100%;
+  height: auto;
+  position: relative;
+  top: 0;
+  transform: none;
+  z-index: 105;
+}
+
+/* =======================================================
+   🌳 SECCIÓN SUPERPUESTA — ÁRBOL COMPLETO CON FLEXBOX
+   ======================================================= */
+
+/* === HACER QUE LA SECCIÓN DEL ÁRBOL SE SUPERPONGA === */
+.seccion-arbol {
+  position: absolute;       /* 🔹 Flota encima del resto */
+  top: 0;                   /* 🔹 Empieza justo arriba */
+  left: 0;
+  width: 100%;
+height: 100vh;             /* ocupa solo una pantalla */
+  z-index: 200;             /* 🔹 Por encima del escenario */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;  /* 🔹 Asegura que el árbol comience arriba */
+  pointer-events: none;     /* 🔹 No bloquea scroll */
+  overflow: visible;
+  
+}
+
+/* Contenedor interno del árbol */
+/* Contenedor interno con efecto de acompañamiento de scroll */
+.arbol-flex {
+  top: 0;
+  width: min(90%, 1500px);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  justify-content: flex-end; /* 👉 mueve el contenido a la derecha */
+  align-items: flex-start;
+  margin-left: auto;         /* 👉 empuja todo hacia la derecha */
+}
+
+/* Cada capa ocupa todo el contenedor */
+.arbol-flex .capa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+
+
+/* Orden de capas (de atrás hacia adelante) */
+.capa.ramas { z-index: 1; }
+.capa.hojas { z-index: 2; }
+.capa.brilloramas { z-index: 3; }
+.capa.brilloraices { z-index: 4; }
+.capa.frutos { z-index: 5; }
+.capa.descendiente { z-index: 6; }
+.capa.frutosind { z-index: 7; }
+
+/* Contador dentro del árbol */
+.contador-arbol {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  z-index: 8;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 16px 24px;
+  text-align: center;
+  color: #fff;
+  pointer-events: auto;
+}
+
+
+.contador-arbol h2 {
+  margin-bottom: 8px;
+  font-size: clamp(16px, 1vw + 0.5rem, 22px);
+}
+
+.bloques {
+  display: flex;
+  gap: 10px;
+}
+
+.bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.numero {
+  background: rgba(255,255,255,0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bloque span {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+  .arbol-flex {
+    width: 95%;
+    aspect-ratio: auto;
+  }
+
+  .contador-arbol {
+    bottom: 5%;
+    right: 5%;
+    transform: scale(0.9);
+  }
+}
+
+/* === POSICIONAMIENTO MANUAL DE FRUTOS-IND === */
+
+#layer-frutos-ind {
+  position: absolute;
+  top: 82%;
+  left: 60%;
+  transform: translate(-50%, -50%) scale(var(--site-scale, 1));
+  width: 10%; /* 🔹 antes estaba 100% */
+  max-width: 200px; /* 🔹 límite superior */
+  height: auto;
+  pointer-events: auto;
+  z-index: 105;
+}
