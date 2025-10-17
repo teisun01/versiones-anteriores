@@ -1,0 +1,211 @@
+/* =========================================================
+   🌟 ARCHIVO DE ANIMACIONES — animaciones.css
+   Versión responsive (mantiene proporciones idénticas)
+   ========================================================= */
+
+/* === ✨ BRILLOS === */
+
+/* Brillo de ramas */
+#layer-brilloramas {
+  animation: twinkle 4s infinite ease-in-out;
+  opacity: 0.05;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 1; }
+}
+
+/* Brillo de raíces (base) */
+#layer-brilloraices.base {
+  opacity: 0.1;
+  animation: glowBase 6s infinite ease-in-out;
+}
+@keyframes glowBase {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+/* Raíces activadas */
+#layer-brilloraices.active {
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 0%;
+  mask-image: linear-gradient(to bottom, black 0%, black 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 0%;
+  animation:
+    revealBrilloraices 2.8s ease-out forwards,
+    glowActive 6s infinite ease-in-out 2.8s;
+}
+@keyframes revealBrilloraices {
+  0% { -webkit-mask-size: 100% 0%; mask-size: 100% 0%; }
+  100% { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+}
+
+/* Raíces reversas */
+#layer-brilloraices.reverse {
+  animation: revealBrilloraicesReverse 2.8s ease-out forwards;
+}
+@keyframes revealBrilloraicesReverse {
+  0% { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; opacity: 1; }
+  100% { -webkit-mask-size: 100% 0%; mask-size: 100% 0%; opacity: 0.1; }
+}
+
+@keyframes glowActive {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+
+/* === 🌿 ENERGÍA (ÁRBOLES Y SELEN) === */
+
+/* Árbol amarillo — energía natural */
+#arbol-amarillo {
+  animation: energiaAmarillo 8s ease-in-out infinite;
+}
+@keyframes energiaAmarillo {
+  0% { transform: translate(-50%, 0) translate(0, 0); }
+  25% { transform: translate(-50%, 0) translate(clamp(1px, 0.15vw, 3px), clamp(-6px, -0.3vw, -6px)); }
+  50% { transform: translate(-50%, 0) translate(clamp(-3px, -0.3vw, -3px), clamp(4px, 0.2vw, 4px)); }
+  75% { transform: translate(-50%, 0) translate(clamp(2px, 0.2vw, 2px), clamp(-4px, -0.2vw, -4px)); }
+  100% { transform: translate(-50%, 0) translate(0, 0); }
+}
+
+/* Selen — energía mística y flotante */
+#selen {
+  animation: energiaSelen 6s ease-in-out infinite;
+}
+@keyframes energiaSelen {
+  0% { transform: translate(-50%, 0) translate(0, 0); }
+  20% { transform: translate(-50%, 0) translate(clamp(-4px, -0.25vw, -4px), clamp(-5px, -0.3vw, -5px)); }
+  40% { transform: translate(-50%, 0) translate(clamp(3px, 0.2vw, 3px), clamp(6px, 0.35vw, 6px)); }
+  60% { transform: translate(-50%, 0) translate(clamp(-2px, -0.15vw, -2px), clamp(-4px, -0.25vw, -4px)); }
+  80% { transform: translate(-50%, 0) translate(clamp(5px, 0.25vw, 5px), clamp(3px, 0.2vw, 3px)); }
+  100% { transform: translate(-50%, 0) translate(0, 0); }
+}
+
+
+/* === 🧾 TEXTO HISTORIA === */
+
+/* Aparece */
+.historia.visible h2,
+.historia.visible p {
+  animation: textoSube 1.1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+@keyframes textoSube {
+  0% { opacity: 0; transform: translateY(clamp(40px, 3vh, 60px)) scale(0.98); }
+  60% { opacity: 1; transform: translateY(clamp(-10px, -1vh, -10px)) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Desaparece */
+.historia.saliente h2,
+.historia.saliente p {
+  animation: textoBaja 1s ease-in forwards;
+}
+@keyframes textoBaja {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  40% { opacity: 1; transform: translateY(clamp(10px, 0.5vh, 10px)) scale(0.98); }
+  100% { opacity: 0; transform: translateY(clamp(60px, 4vh, 60px)) scale(0.95); }
+}
+
+
+/* === 👤 DESCENDIENTE === */
+
+
+
+/* Animaciones se aplican SOLO al <img> */
+#layer-descendiente {
+  position: absolute;
+  left: clamp(58%, 60vw, 60%);
+  top: clamp(38%, 40vh, 40%);
+  transform: translate(-50%, -50%);
+  z-index: 104;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#layer-descendiente.visible {
+  animation: descendienteSube 1.4s ease-out forwards;
+}
+@keyframes descendienteSube {
+  0% { opacity: 0; transform: translateX(-50%) translateY(clamp(800px, 52vh, 1000px)); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(clamp(350px, 22vh, 400px)); }
+}
+
+#layer-descendiente.saliente {
+  animation: descendienteBaja 1.4s ease-in forwards;
+}
+@keyframes descendienteBaja {
+  0% { opacity: 1; transform: translateX(-50%) translateY(clamp(350px, 22vh, 400px)); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(clamp(800px, 52vh, 1000px)); }
+}
+
+
+/* === 🍎 FRUTOS === */
+/* Estado de caída (inicio → resto → respiración) */
+#layer-frutos-ind.caida {
+  animation:
+    frutosCaenInicio 2s cubic-bezier(0.25, 0, 0.2, 1) forwards,
+    frutosCaenResto 1.5s cubic-bezier(0.25, 0, 0.2, 1) 2s forwards,
+    frutosRespiran 3s ease-in-out 3.5s infinite;
+}
+
+/* Etapa 1: caída inicial */
+@keyframes frutosCaenInicio {
+  0% {
+    transform: translate(-50%, -50%) translateY(clamp(280px, 20vh, 380px)) translateX(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(clamp(680px, 42vh, 820px)) translateX(clamp(-60px, -4vw, -80px));
+  }
+}
+
+/* Etapa 2: caída final con balanceo */
+@keyframes frutosCaenResto {
+  0% {
+    transform: translate(-50%, -50%) translateY(clamp(680px, 42vh, 820px)) translateX(clamp(-60px, -4vw, -80px));
+  }
+  25% {
+    transform: translate(-50%, -50%) translateY(clamp(690px, 43vh, 830px)) translateX(clamp(-80px, -5vw, -100px));
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(clamp(700px, 44vh, 840px)) translateX(clamp(-100px, -6vw, -120px));
+  }
+  75% {
+    transform: translate(-50%, -50%) translateY(clamp(700px, 44vh, 840px)) translateX(clamp(-120px, -7vw, -140px));
+  }
+  100% {
+    transform: translate(-50%, -50%) translateY(clamp(700px, 44vh, 840px)) translateX(clamp(-140px, -8vw, -160px));
+  }
+}
+
+/* Etapa 3: respiración (flotando) */
+#layer-frutos-ind.respira {
+  animation: frutosRespiran 3s ease-in-out infinite;
+}
+
+@keyframes frutosRespiran {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateX(clamp(-140px, -8vw, -160px)) translateY(clamp(700px, 44vh, 840px));
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(clamp(-140px, -8vw, -160px)) translateY(clamp(700px, 44vh, 840px)) translateY(-6px);
+  }
+}
+
+/* Subida (por si se usa la clase .subida) */
+#layer-frutos-ind.subida {
+  animation: frutosSuben 2.8s ease-out forwards;
+}
+
+@keyframes frutosSuben {
+  0% {
+    transform: translate(-50%, -50%) translateY(clamp(700px, 44vh, 840px)) translateX(clamp(-140px, -8vw, -160px));
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
