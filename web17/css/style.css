@@ -1,0 +1,276 @@
+:root { 
+  --bg: #0b0b0f; 
+  --muted: #ffff; 
+  --escala-global: clamp(0.6, 100vw / 1920, 1); /* entre 60% y 100% */
+}
+
+/* === BASE GENERAL === */
+html, body {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  font-family: 'Merriweather', serif;
+  background-color: var(--bg);
+  background-image: url("../img/pasto-recortado.png"), url("../img/pasto-recortado.png");
+  background-repeat: no-repeat, repeat-y;
+  background-position: center top, center top;
+  background-size: cover, cover;
+  color: var(--muted);
+    height: 100dvh;
+  max-height: 2160px; /* o el alto base de tu diseño original */
+
+}
+
+img, .parallax-fotos, .parallax-descendiente, .titulo {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.contenedor {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* === ESCENARIO === */
+.escenario {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+/* === TÍTULO === */
+.titulo {
+  position: absolute;
+  z-index: 102;
+  width: max(31.25vw, 600px); /* en vez de clamp() */
+  top: clamp(30%, 40vh, 40%);
+  left: clamp(6%, 10vw, 10%);
+  transform: none;
+}
+
+/* === PARALLAX === */
+.parallax-fotos, 
+.parallax-descendiente, 
+#arbolesfondo-solo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.parallax-fotos {
+  width: 100vw;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* === FONDO DE ÁRBOLES === */
+#arbolesfondo-solo {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-image: url("../img/arbolesfondo-solo.png");
+  background-repeat: repeat-x;
+  background-position: top center;
+  z-index: 0;
+}
+
+/* === CAPAS POR NIVEL === */
+#hojasarbol { z-index: 98; }
+#layer-brilloramas { z-index: 99; }
+#ramas { z-index: 100; }
+#layer-brilloraices { z-index: 101; }
+#layer-frutos { z-index: 102; }
+#layer-descendiente { z-index: 103; }
+
+/* === SECCIÓN HISTORIA === */
+section.historia {
+  min-height: 100vh;
+  padding: clamp(30px, 4vw, 80px) clamp(20px, 4vw, 80px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
+section.historia h2 {
+  font-size: max(1vw, 16px);
+  margin-bottom: clamp(10px, 1vw, 15px);
+  color: #fff;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+section.historia p {
+  font-size: max(1vw, 16px);
+  line-height: 1.3;
+  color: #fff;
+  max-width: clamp(500px, 36vw, 700px);
+  white-space: pre-line;
+  text-align: left;
+  margin-left: clamp(3%, 5vw, 5%);
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-style: italic;
+  opacity: 0.9;
+}
+
+/* === CONTADOR SOBRE EL ÁRBOL === */
+.contador-wrapper {
+  position: absolute;
+  top: clamp(90px, 8vh, 150px);
+  left: 100%;
+  transform: translateX(-50%);
+  z-index: 310;
+  pointer-events: none;
+  width: 100%;
+}
+
+.contador-fondo {
+  position: relative;
+  background: url("../img/fondo-contador.png") center center / cover no-repeat;
+  border-radius: 15px;
+  padding: clamp(8px, 1vw, 18px) clamp(12px, 1.2vw, 20px);
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  width: fit-content;
+  min-width: clamp(100px, 10vw, 150px);
+  z-index: 310;
+  transform: scale(clamp(1, 100vw / 1920, 1.8));
+  transform-origin: top center;
+
+}
+
+.contador-fondo h2 {
+  margin: 3px 0;
+  font-size: clamp(14px, 1vw + 0.5rem, 22px);
+  font-weight: 600;
+  color: #003253;
+  position: relative;
+  z-index: 312;
+}
+
+.contador-overlay {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.digito {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(30px, 2.2vw, 42px);
+  height: clamp(36px, 3.5vh, 50px);
+  background: url("../img/cuadrito-contador.png") center/contain no-repeat;
+  color: #fff;
+  font-weight: bold;
+  font-size: clamp(18px, 1.5vw + 0.5rem, 32px);
+  text-shadow: 0 0 4px rgba(0,0,0,0.6);
+}
+
+.separador {
+  display: inline-block;
+  padding: 0 4px;
+  font-size: clamp(18px, 1.5vw + 0.5rem, 32px);
+  font-weight: bold;
+  color: #fff;
+  vertical-align: middle;
+  z-index: 312;
+}
+
+.bloque-tiempo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 6px;
+}
+
+.fila-numeros {
+  display: flex;
+  gap: 2px;
+}
+
+.etiqueta-tiempo {
+  font-size: clamp(10px, 0.8vw + 0.3rem, 16px);
+  font-weight: 500;
+  color: #003253;
+  text-transform: uppercase;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.bloque-tiempo.oculto {
+  display: none;
+}
+
+/* === POSICIÓN DE LAS CAPAS === */
+#hojasarbol,
+#layer-brilloramas,
+#ramas,
+#layer-brilloraices,
+#layer-frutos,
+#layer-descendiente {
+  left: 45%;
+}
+
+
+
+
+/* === FRUTOS === */
+#link-frutos-ind {
+  display: inline-block;
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 105;
+}
+
+#layer-frutos-inicial,
+#layer-frutos-final {
+  display: block;
+  pointer-events: auto;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 105;
+}
+
+/* === 🍎 FRUTOS IND — Tamaño original adaptable === */
+#layer-frutos-ind {
+  position: absolute;
+  left: 50%;
+  top: 54%; /* ajustá si necesitás subirlo o bajarlo */
+  transform: translate(-50%, -50%);
+  z-index: 105;
+  display: block;
+  pointer-events: none; /* no bloquea scroll */
+}
+
+#layer-frutos-ind img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  pointer-events: auto; /* permite clics en los enlaces */
+}
