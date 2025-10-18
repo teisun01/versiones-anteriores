@@ -1,0 +1,307 @@
+/* === 💻 1. Pantallas grandes (≥1920px) === */
+@media (min-width: 1920px) {
+  /* 🕓 CONTADOR */
+  .contador-wrapper {
+    position: absolute;
+    top: 0; /* el JS seguirá actualizando top dinámicamente */
+    left: 50%;
+    width: 15%; /* hace que el área sea más ancha */
+    transform: translateX(200px) scale(1.1); /* mueve hacia la derecha */
+  }
+
+  /* 👤 DESCENDIENTE */
+  #layer-descendiente {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(110%);
+    width: 100%;
+  }
+
+}
+
+
+@media (min-width: 1600px) {
+  /* 🕓 CONTADOR */
+  .contador-wrapper {
+    top: 0%;
+    left: 92%;
+    transform: translateX(-50%) scale(1.1);
+  }
+
+  /* 👤 DESCENDIENTE */
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    width: 100%;
+  }
+
+
+}
+
+/* === 💻 2. Pantallas medianas (1366px – 1599px) === */
+@media (min-width: 1366px) and (max-width: 1599px) {
+  .contador-wrapper {
+    top: 160px;
+    left: 100%;
+    transform: translateX(-55%) scale(1);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(130%);
+    width: 95%;
+  }
+
+
+}
+
+/* === 💻 3. Pantallas chicas (1024px – 1365px) === */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .contador-wrapper {
+    top: 180px;
+    left: 90%;
+    transform: translateX(-50%) scale(0.9);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(140%);
+    width: 90%;
+  }
+
+
+}
+
+/* === 4. Tablets (769 a 1023) === */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .contador-wrapper {
+    top: 200px;
+    left: 85%;
+    transform: translateX(-50%) scale(0.8);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    width: 85%;
+  }
+
+}
+
+
+/* === VERSIÓN CELULAR === */
+/* === 5. Celulares (0 a 768) === */
+/* === 💻 5. Celulares (0 a 768) === */
+@media (min-width: 0px) and (max-width: 768px) {
+
+  /* 🔹 TITULO MORTHALIS */
+  .titulo {
+    top: 25%;
+    right: 0;
+    left: auto;
+    width: 400px;
+    transform: none !important;
+  }
+
+  /* 🔹 TEXTOS */
+  section.historia { 
+    padding: 20px; 
+    transform: translateX(-35%) translateY(90%) !important;
+    width: 60%;
+  }
+  
+  section.historia h2 { 
+ margin-bottom: 10px; /* 💡 separa un poco del párrafo */
+    width: 100%;
+  font-size: clamp(28px, 2vw + 1rem, 64px);
+  text-align: left; /* asegura alineación */
+  }
+
+section.historia p { 
+  font-size: clamp(12px, 2vw, 14px);
+  line-height: 1.5;
+  margin-left: 0 !important; /* 👈 elimina el empuje a la derecha */
+  text-align: left; /* 👈 asegura mismo inicio que el h2 */
+  width: 100%;
+}
+
+/* 🔹 CONTADOR — reposicionado en móvil */
+#contador-wrapper,
+.contador-wrapper {
+  position: absolute;
+  top: 292%;        /* 🔽 mueve hacia abajo (ajustá entre 150–180%) */
+  left: 110%;
+  transform: translateX(-50%) scale(0.6); /* más pequeño y centrado */
+  transform-origin: top center;
+width: 100%;
+  z-index: 200;     /* sobre el árbol */
+}
+
+  /* 🔹 ÁRBOLES */
+  #arbol-amarillo { 
+    left: 58%;
+    --x-base: -50%;
+    --y-base: 10px;
+    transform: translate(var(--x-base), var(--y-base));
+    width: 120%;
+  }
+
+/* 🔹 FONDO DEL ÁRBOL — más ancho en móvil */
+#arbolesfondo-solo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;              /* antes 100vw — ahora más ancho */
+  height: auto;
+  min-height: 100vh;
+  background-size: cover;   /* para que llene horizontalmente */
+  background-repeat: no-repeat;
+  background-position: center top;
+  z-index: 0;
+
+}
+
+/* 🔹 Mueve todo el árbol hacia arriba en móvil */
+.seccion-arbol {
+  transform: translateY(-70%) !important; /* 🔼 sube todo el árbol */
+  transition: transform 0.3s ease;
+}
+
+/* === 🌌 ESCENARIO EN MÓVIL — MÁS ALTO, MISMO EFECTO DE RECORTE === */
+.escenario {
+min-height: 90vh;
+  overflow: hidden;  /* mantiene el recorte del parallax */
+  position: relative;
+}
+  /* 🔹 TODO EL ÁRBOL */
+  #hojasarbol,
+  #layer-brilloramas,
+  #ramas,
+  #layer-brilloraices,
+  #layer-descendiente {
+    transform: translateX(-50%) translateY(85%) !important;
+    width: 130%;    
+    left: 35%;
+  }
+
+  /* 🔹 Reemplaza ramas por arbolcompleto.png */
+  #ramas {
+    content: url("../img/arbolcompleto.png");
+    transform: translateX(-55%) translateY(62%);
+    width: 139%;
+    left: 40%;
+  }
+
+  #ramas,
+  #hojasarbol,
+  #layer-brilloramas,
+  #layer-brilloraices {
+    transform: translateX(-55%) translateY(62%) !important;
+  }
+
+  /* 🔹 Cambia hojas por la versión móvil */
+  #hojasarbol {
+    content: url("../img/hojasarbolcelular.png");
+    transform: translateX(-55%) translateY(62%) !important;
+    width: 139%;
+    left: 40%;
+  }
+
+  /* 🔹 SELEN */
+  #selen { 
+    left: 50%;
+    --x-base: -30%;
+    --y-base: 0%;
+    transform: translate(var(--x-base), var(--y-base));
+    width: 110%;    
+  }
+
+  /* 🔹 DESCENDIENTE */
+  #layer-descendiente {
+    left: 45%;
+    top: 120%;
+    transform: translateX(-62%) translateY(150%) !important;
+    width: 100%; 
+  }
+
+  /* === 🍎 FRUTOS EN MÓVIL — DESACTIVADOS === */
+  #layer-frutos-ind,
+  #layer-frutos-ind.caida,
+  #layer-frutos-ind.respira,
+  #layer-frutos-ind.subida {
+    animation: none !important;
+    transition: none !important;
+    transform: translateX(-55%) translateY(62%) scale(0.1) !important;
+    width: 139%;
+    left: 60%;
+    top: 90%;
+    position: absolute;
+  }
+
+  /* 🔹 Desactiva animaciones generales también */
+  #layer-frutos,
+  #layer-descendiente {
+    animation: none !important;
+    transition: none !important;
+    transform: translateX(-55%) translateY(62%) !important;
+  }
+
+    #layer-brilloramas{
+        top: 40%; /* ajusta verticalmente según necesites (30–40%) */
+  left: 42%;
+    }
+
+  /* === 🍎 FRUTOS Y RAÍCES EN MÓVIL — ALINEADOS AL ÁRBOL === */
+#layer-frutos {
+  position: absolute;
+  top: 40%; /* ajusta verticalmente según necesites (30–40%) */
+  left: 40%;
+  width: 139%;
+  transform: translateX(-55%) translateY(62%) !important;
+  z-index: 102; /* justo detrás del descendiente */
+}
+
+#layer-frutos-ind,
+#layer-frutos-ind.caida,
+#layer-frutos-ind.respira,
+#layer-frutos-ind.subida {
+  animation: none !important;
+  transition: none !important;
+  transform: translateX(-55%) translateY(62%) scale(0.1) !important;
+  width: 139%;
+  left: 60%;
+  top: 92%;
+  position: absolute;
+}
+
+#layer-brilloraices {
+  position: absolute;
+  top: 32%; /* baja un poco para encajar con el tronco */
+  left: 40%;
+  width: 139%;
+  transform: translateX(-55%) translateY(62%) !important;
+  z-index: 101; /* debajo de frutos */
+}
+
+
+ /* quitamos la anulación previa */
+  #layer-frutos-ind {
+    animation: none !important;
+  }
+
+  @keyframes palpitarFrutos {
+    0%, 100% {
+      transform: translateX(-55%) translateY(62%) scale(0.1);
+    }
+    50% {
+      transform: translateX(-55%) translateY(62%) scale(0.4);
+    }
+  }
+
+  /* aplicamos el latido con máxima prioridad */
+  body #layer-frutos-ind {
+    animation: palpitarFrutos 1.8s ease-in-out infinite !important;
+    transform-origin: center center !important;
+  }
+}
