@@ -1,0 +1,81 @@
+/* === 💻 1. Pantallas grandes (≥1920px) === */
+@media (min-width: 1920px) {
+  /* 🕓 CONTADOR */
+  .contador-wrapper {
+    position: absolute;
+    top: 0; /* el JS seguirá actualizando top dinámicamente */
+    left: 50%;
+    width: 15%; /* hace que el área sea más ancha */
+    transform: translateX(200px) scale(1.1); /* mueve hacia la derecha */
+  }
+
+  /* 👤 DESCENDIENTE */
+  #layer-descendiente {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(110%);
+    width: 100%;
+  }
+}
+
+/* === 💻 1.5 Pantallas grandes intermedias (≥1600px) === */
+@media (min-width: 1600px) {
+  /* 🕓 CONTADOR */
+  .contador-wrapper {
+    top: 0%;
+    left: 92%;
+    transform: translateX(-50%) scale(1.1);
+  }
+
+  /* 👤 DESCENDIENTE */
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    width: 100%;
+  }
+}
+
+/* === 💻 2. Pantallas medianas (1366px – 1599px) === */
+@media (min-width: 1366px) and (max-width: 1599px) {
+  .contador-wrapper {
+    top: 160px;
+    left: 100%;
+    transform: translateX(-55%) scale(1);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(130%);
+    width: 95%;
+  }
+}
+
+/* === 💻 3. Pantallas chicas (1024px – 1365px) === */
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .contador-wrapper {
+    top: 180px;
+    left: 90%;
+    transform: translateX(-50%) scale(0.9);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(140%);
+    width: 90%;
+  }
+}
+
+/* === 💻 4. Tablets (769px – 1023px) === */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .contador-wrapper {
+    top: 200px;
+    left: 85%;
+    transform: translateX(-50%) scale(0.8);
+  }
+
+  #layer-descendiente {
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    width: 85%;
+  }
+}
